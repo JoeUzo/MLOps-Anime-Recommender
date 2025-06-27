@@ -1,0 +1,12 @@
+*.egg-info
+logs/
+venv/
+.venv/
+.env
+*.env
+__pycache__/
+*.log
+test*.py
+notebook/*.pkl
+test_*.sh
+mlruns/
