@@ -10,3 +10,4 @@ test*.py
 notebook/*.pkl
 test_*.sh
 mlruns/
+artifacts/raw/*

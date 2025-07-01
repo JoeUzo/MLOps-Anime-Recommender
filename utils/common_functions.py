@@ -19,5 +19,5 @@ def read_yaml(file_path):
         
     except Exception as e:
         logger.error(f"Error reading YAML file: {file_path}")
-        raise CustomException("Failed to read YAML file", sys)
+        raise CustomException("Failed to read YAML file", e)
     
