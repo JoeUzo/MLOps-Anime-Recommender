@@ -1,6 +1,6 @@
 pandas
 numpy
-scikit-learn
 setuptools
 google-cloud-storage
 pyyaml
+tensorflow
