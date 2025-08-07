@@ -10,10 +10,11 @@ logger = get_logger(__name__)
 
 
 class DataIngestion:
-    def __init__(self, config):
+    def __init__(self, config, nrows=5000000):
         self.config = config['data_ingestion']
         self.bucket_name = self.config['bucket_name']
         self.filenames = self.config['bucket_file_names']
+        self.nrows = nrows
 
         os.makedirs(RAW_DIR, exist_ok=True)
 
@@ -32,16 +33,16 @@ class DataIngestion:
                 blob.download_to_filename(file_path)
 
                 if file_name == 'animelist.csv':
-                    data = pd.read_csv(file_path, nrows=5000000)
+                    data = pd.read_csv(file_path, nrows=self.nrows)
                     data.to_csv(file_path, index=False)
 
-                    logger.info("Large file detected, downloading only 5M rows")
+                    logger.info(f"Large file detected, downloading only {self.nrows} rows")
        
             logger.info(f'Successfully downloaded files from GCP')
         
         except Exception as e:
             logger.error(f'Failed to download files')
-            raise CustomException('Failed to download file from GCP', e)
+            raise CustomException(f'Failed to download file from GCP {e}')
     
     
     def run(self):
@@ -58,5 +59,5 @@ class DataIngestion:
 
 
 if __name__ == "__main__":
-    data_ingestion = DataIngestion(read_yaml(CONFIG_PATH))
+    data_ingestion = DataIngestion(read_yaml(CONFIG_PATH), nrows=50000000)
     data_ingestion.run()
