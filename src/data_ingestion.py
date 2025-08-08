@@ -59,5 +59,5 @@ class DataIngestion:
 
 
 if __name__ == "__main__":
-    data_ingestion = DataIngestion(read_yaml(CONFIG_PATH), nrows=50000000)
+    data_ingestion = DataIngestion(read_yaml(CONFIG_PATH), nrows=5000000)
     data_ingestion.run()
