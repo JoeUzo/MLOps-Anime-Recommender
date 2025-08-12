@@ -33,7 +33,7 @@ class DataProcessing():
 
     def load_data(self, usecols):
         try:
-            self.rating_df = pd.read_csv(self.input_file, low_memory=True, usecols=usecols):
+            self.rating_df = pd.read_csv(self.input_file, low_memory=True, usecols=usecols)
             logger.info("Data loaded successfully")
         except Exception as e:
             raise CustomException(f"Failed to load Data - {e}")
@@ -77,5 +77,56 @@ class DataProcessing():
         
         except Exception as e:
             raise CustomException(f"Failed to encode data - {e}", sys)
+
+
+    def split_data(self, test_size, random_state=43):
+        try:
+            self.rating_df = self.rating_df.sample(frac=1, random_state=43).reset_index(drop=True)
+            X = self.rating_df[["user", "anime"]].values
+            y = self.rating_df["rating"]
+
+            train_indices = self.rating_df.shape[0] - test_size
+
+            X_train, X_test, y_train, y_test = (
+                X[:train_indices],
+                X[train_indices:],
+                y[:train_indices],
+                y[train_indices:]
+            )
+
+            self.X_train_array = [X_train[:, 0], X_train[:, 1]]
+            self.X_test_array = [X_test[:, 0], X_test[:, 1]]
+            self.y_train = y_train
+            self.y_test = y_test
+
+            logger.info("Data splitted successfully")
+
+        except Exception as e:
+            raise CustomException(f"Failed to split data {e}", sys)
         
     
+    def save_artifacts(self):
+        try:
+            artifacts = {
+                "user2user_encoded": self.user2user_encoded,
+                "user2user_decoded": self.user2user_decoded,
+                "anime2anime_encoded": self.anime2anime_encoded,
+                "anime2anime_decoded": self.anime2anime_decoded,
+            }
+
+            for name, data in artifacts.items():
+                joblib.dump(data, os.path.join(self.output_dir, f"{name}.pkl"))
+                logger.info(f"{name} saved successfully in processed directory")
+            
+            joblib.dump(self.X_train_array, X_TRAIN_ARRAY)
+            joblib.dump(self.X_test_array, X_TEST_ARRAY)
+            joblib.dump(self.y_train, Y_TRAIN)
+            joblib.dump(self.X_train_array, Y_TEST)
+
+            self.rating_df.to_csv(RATING_DF, index=False)
+
+            logger.info("Artifacts saved successfully")
+
+        except Exception as e:
+            raise CustomException(f"Failed to save artifacts {e}", sys)
+        
