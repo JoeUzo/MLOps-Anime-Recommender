@@ -12,3 +12,5 @@ test_*.sh
 mlruns/
 artifacts/raw/*
 notebook/weights.*
+artifacts/processed/*
+tf-dml
