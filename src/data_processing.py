@@ -48,7 +48,7 @@ class DataProcessing():
 
         except CustomException as e:
             logger.error(f"Failed to filter users - {e}")
-            raise CustomException(f"Failed to filter users", sys)
+            raise CustomException(f"Failed to filter users - {e}", sys)
     
     def scale_ratings(self):
         try:
@@ -107,7 +107,7 @@ class DataProcessing():
 
         except Exception as e:
             logger.error(f"Failed to split data - {e}")
-            raise CustomException(f"Failed to split data {e}", sys)
+            raise CustomException(f"Failed to split data - {e}", sys)
         
     
     def save_artifacts(self):
@@ -134,7 +134,7 @@ class DataProcessing():
 
         except Exception as e:
             logger.error(f"Failed to save artifacts - {e}")
-            raise CustomException(f"Failed to save artifacts {e}", sys)
+            raise CustomException(f"Failed to save artifacts - {e}", sys)
     
 
     def process_anime_data(self):
@@ -173,7 +173,7 @@ class DataProcessing():
 
         except Exception as e:
             logger.error(f"Failed to process anime and anime synopsis data - {e}")
-            raise CustomException(f"Failed to process anime and anime synopsis data {e}", sys)
+            raise CustomException(f"Failed to process anime and anime synopsis data - {e}", sys)
         
     
     def run(self):

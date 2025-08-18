@@ -42,7 +42,7 @@ class DataIngestion:
         
         except Exception as e:
             logger.error(f'Failed to download files')
-            raise CustomException(f'Failed to download file from GCP {e}')
+            raise CustomException(f'Failed to download file from GCP - {e}')
     
     
     def run(self):
