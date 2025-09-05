@@ -126,7 +126,7 @@ class DataProcessing():
             joblib.dump(self.X_train_array, X_TRAIN_ARRAY)
             joblib.dump(self.X_test_array, X_TEST_ARRAY)
             joblib.dump(self.y_train, Y_TRAIN)
-            joblib.dump(self.X_train_array, Y_TEST)
+            joblib.dump(self.y_test, Y_TEST)
 
             self.rating_df.to_csv(RATING_DF, index=False)
 
@@ -179,7 +179,7 @@ class DataProcessing():
     def run(self):
         try:
             self.load_data(usecols=["user_id", "anime_id", "rating"])
-            self.filter_users(min_rating=30)
+            self.filter_users(min_rating=75)
             self.scale_ratings()
             self.encode_data()
             self.split_data()

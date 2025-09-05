@@ -14,3 +14,5 @@ artifacts/raw/*
 notebook/weights.*
 artifacts/processed/*
 tf-dml
+*.pkl
+*.h5

@@ -4,3 +4,5 @@ setuptools
 google-cloud-storage
 pyyaml
 tensorflow
+comet-ml
+pydantic-settings

@@ -1,4 +1,5 @@
 import joblib
+import comet_ml
 import numpy as np
 import os
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, LearningRateScheduler
@@ -6,13 +7,20 @@ from src.base_model import BaseModel
 from src.logger import get_logger
 from src.custom_exception import CustomException
 from config.path_config import *
+from config.env_config import envconfig
 
 logger = get_logger(__name__)
 
 class ModelTraining:
     def __init__(self, data_path):
         self.data_path = data_path
-        logger.info("Model training initialized")
+
+        self.experiment = comet_ml.Experiment(
+            api_key=envconfig.comet_ml_api,
+            project_name="anime-recommender",
+            workspace="joeuzo")
+        
+        logger.info("Model training and Comet ML initialized")
 
     def load_data(self):
         try:
@@ -67,7 +75,6 @@ class ModelTraining:
             os.makedirs(os.path.dirname(CHECKPOINT_FILEPATH), exist_ok=True)
             os.makedirs(MODEL_DIR, exist_ok=True)
             os.makedirs(WEIGTHS_DIR, exist_ok=True)
-            print("the lengths", len(X_train_array[0]), len(X_test_array[0]), len(y_train), len(y_test[0]))
 
             try:
                 history = model.fit(
@@ -81,6 +88,17 @@ class ModelTraining:
                 )
                 model.load_weights(CHECKPOINT_FILEPATH)
                 logger.info("Model trained successfully")
+
+                for epoch in range(len(history.history["loss"])):
+                    train_loss = history.history["loss"][epoch]
+                    val_loss = history.history["val_loss"][epoch]
+                    mse = history.history["mse"][epoch]
+                    mae = history.history["mae"][epoch]
+
+                    self.experiment.log_metric("train_loss", train_loss, step=epoch)
+                    self.experiment.log_metric("val_loss", val_loss, step=epoch)
+                    self.experiment.log_metric("mse", mse, step=epoch)
+                    self.experiment.log_metric("mae", mae, step=epoch)
 
             except Exception as e:
                 logger.error(f"Model training failed - {e}")
@@ -116,6 +134,10 @@ class ModelTraining:
 
             joblib.dump(user_weights, USER_WEIGHTS_PATH)
             joblib.dump(anime_weights, ANIME_WEIGTHS_PATH)
+
+            self.experiment.log_asset(MODEL_PATH)
+            self.experiment.log_asset(ANIME_WEIGTHS_PATH)
+            self.experiment.log_asset(USER_WEIGHTS_PATH)
 
             logger.info(f"Weights saved to {USER_WEIGHTS_PATH} and {ANIME_WEIGTHS_PATH}")
 
