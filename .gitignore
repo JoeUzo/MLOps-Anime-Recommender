@@ -18,3 +18,4 @@ artifacts/model_checkpoints/
 tf-dml
 *.pkl
 *.h5
+/artifacts
