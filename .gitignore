@@ -13,6 +13,8 @@ mlruns/
 artifacts/raw/*
 notebook/weights.*
 artifacts/processed/*
+artifacts/models/
+artifacts/model_checkpoints/
 tf-dml
 *.pkl
 *.h5
