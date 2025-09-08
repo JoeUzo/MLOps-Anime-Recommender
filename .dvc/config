@@ -1,0 +1,4 @@
+[core]
+    remote = mygcpbucket
+['remote "mygcpbucket"']
+    url = gs://my-anime-dvc-bucket-99/

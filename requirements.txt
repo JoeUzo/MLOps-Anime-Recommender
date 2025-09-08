@@ -7,3 +7,4 @@ tensorflow
 comet-ml
 pydantic-settings
 dvc
+dvc-gs
