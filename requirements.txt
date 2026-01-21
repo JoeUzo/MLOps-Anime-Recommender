@@ -8,3 +8,4 @@ comet-ml
 pydantic-settings
 dvc
 dvc-gs
+flask

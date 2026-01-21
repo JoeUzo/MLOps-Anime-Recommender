@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hybrid Recommendations</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>Hybrid Recommendation Demo</h1>
+      <p class="muted">Enter a User ID and submit to get recommendations.</p>
+    </div>
+
+    <div class="card">
+      <form class="form" method="POST" action="/">
+        <label class="label" for="userID">User ID</label>
+        <div class="row">
+          <input class="input" id="userID" name="userID" type="number" min="1" required placeholder="e.g. 12">
+          <button class="btn" type="submit">Get Recommendations</button>
+        </div>
+      </form>
+    </div>
+
+    {% if recommendations %}
+      <div class="card">
+        <h2>Recommendations</h2>
+          <ul class="list">
+            {% for item in recommendations %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+      </div>
+    {% endif %}
+  </div>
+</body>
+
+</html>

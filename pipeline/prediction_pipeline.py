@@ -13,7 +13,7 @@ def hybrid_recommendation(user_id, user_Weight=0.5, content_weight=0.5):
     #### Content Recommendation
     content_recommended_animes = []
     for anime in user_recommended_animes_list:
-        similar_animes = find_similar_animes(anime, ANIME_WEIGTHS_PATH, ANIME2ANIME_ENCODED, ANIME2ANIME_DECODED)
+        similar_animes = find_similar_animes(anime, DF_PATH, SYNOPSIS_DF, ANIME_WEIGTHS_PATH, ANIME2ANIME_ENCODED, ANIME2ANIME_DECODED)
 
         if similar_animes is not None and not similar_animes.empty:
             content_recommended_animes.extend(similar_animes["Name"].tolist())
