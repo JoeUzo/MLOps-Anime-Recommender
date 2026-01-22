@@ -31,9 +31,18 @@ body{
     linear-gradient(180deg, var(--bg), #070b14);
 }
 
+/* ---------- Page layout (Fix 2) ---------- */
+.page{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* ---------- Layout ---------- */
 .container{
+  flex: 1;
   max-width: 980px;
+  width: 100%;
   margin: 56px auto;
   padding: 0 18px;
 }
@@ -166,6 +175,20 @@ body{
 .error{
   color: var(--danger);
   font-weight: 650;
+}
+
+/* ---------- Footer ---------- */
+.footer{
+  border-top: 1px solid rgba(255,255,255,0.10);
+  padding: 18px;
+  background: rgba(0,0,0,0.18);
+}
+
+.footer-text{
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
 }
 
 /* ---------- Small screens ---------- */
