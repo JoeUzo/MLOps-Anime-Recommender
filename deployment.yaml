@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: apps/v1
+Metadata:
+  name: anime-recomm-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: anime-recomm-app
+  template:
+    metadata:
+      labels:
+        app: anime-recomm-app
+    spec:
+      containers:
+        - name: anime-recomm-ct
+          image: gcr.io/${GCP_PROJECT}/anime-recommender:latest
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: anime-recomm-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: anime-recomm-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
