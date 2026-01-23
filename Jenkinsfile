@@ -27,7 +27,7 @@ pipeline {
 
         stage("DVC pull"){
             steps{
-                withCredentials([file(credentialsId:'gcp-key', variable:'GOOGLE_APPLICATION_CREDENTIAlS')]){
+                withCredentials([file(credentialsId:'gcp-key', variable:'GOOGLE_APPLICATION_CREDENTIALS')]){
                     sh '''
                     echo 'DVC pull...'
                     . ${VENV_DIR}/bin/activate  
