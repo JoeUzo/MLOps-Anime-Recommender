@@ -10,4 +10,4 @@ dvc
 dvc-gs
 flask
 joblib
-sklearn
+scikit-learn
