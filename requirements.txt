@@ -9,3 +9,4 @@ pydantic-settings
 dvc
 dvc-gs
 flask
+joblib
