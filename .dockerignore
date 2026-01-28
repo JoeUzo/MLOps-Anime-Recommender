@@ -1,0 +1,10 @@
+
+.git/
+.dvc/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+notebook/
+logs/
+artifacts/
